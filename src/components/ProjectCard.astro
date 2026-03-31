@@ -16,30 +16,73 @@ const { title, peek, num, href } = Astro.props;
 
 <style>
   .pj {
-    display: block; padding: 22px 0; border-top: 1px solid var(--b);
-    cursor: pointer; position: relative; overflow: hidden;
-    transition: all .3s cubic-bezier(.4,0,.2,1); text-decoration: none; color: inherit;
+    display: block;
+    padding: 22px 0;
+    border-top: 1px solid var(--b);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: inherit;
   }
-  .pj:last-child { border-bottom: 1px solid var(--b); }
-  .pj:hover { padding-left: 8px; }
+  .pj:last-child {
+    border-bottom: 1px solid var(--b);
+  }
+  .pj:hover {
+    padding-left: 8px;
+  }
   .pj h3 {
-    font-size: clamp(24px,4vw,36px); font-weight: 700;
-    letter-spacing: -.04em; color: var(--ghost); transition: color .4s;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--ghost);
+    transition: color 0.4s;
   }
-  .pj:hover h3 { color: var(--fg); }
+  .pj:hover h3 {
+    color: var(--fg);
+  }
   .pj-num {
-    position: absolute; right: 16px; top: 50%;
+    position: absolute;
+    right: 16px;
+    top: 50%;
     transform: translateY(-50%) translateX(30px);
-    font-size: 64px; font-weight: 700; color: var(--ghost);
-    transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .3s;
-    opacity: 0; pointer-events: none;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--ghost);
+    transition:
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
   }
-  .pj:hover .pj-num { transform: translateY(-50%) translateX(0); opacity: 1; }
+  .pj:hover .pj-num {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+  }
   .pj-peek {
-    font-size: 11px; color: var(--m); opacity: 0;
-    transform: translateY(4px); transition: all .3s; margin-top: 2px;
+    font-size: 11px;
+    color: var(--m);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.3s;
+    margin-top: 2px;
   }
-  .pj:hover .pj-peek { opacity: 1; transform: translateY(0); }
-  @media (max-width: 768px) { .pj-num { display: none; } .pj h3 { font-size: 24px; } }
-  @media (max-width: 480px) { .pj h3 { font-size: 20px; } }
+  .pj:hover .pj-peek {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (max-width: 768px) {
+    .pj-num {
+      display: none;
+    }
+    .pj h3 {
+      font-size: 24px;
+    }
+  }
+  @media (max-width: 480px) {
+    .pj h3 {
+      font-size: 20px;
+    }
+  }
 </style>

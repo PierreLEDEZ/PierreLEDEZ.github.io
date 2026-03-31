@@ -1,17 +1,19 @@
 ---
-import Base from '../layouts/Base.astro';
-import SkillGroup from '../components/SkillGroup.astro';
-import { skills } from '../data/skills';
+import Base from "../layouts/Base.astro";
+import SkillGroup from "../components/SkillGroup.astro";
+import { skills } from "../data/skills";
+
+const nbTechnologies = skills.reduce((acc, { items }) => items.length + acc, 0);
 ---
 
-<Base title="pld_ — Skills" current="skills">
+<Base title="pld_ - Skills" current="skills">
   <div class="w">
     <div class="sec">
       <div class="sec-label rv">Skills</div>
-      {skills.map(s => <SkillGroup category={s.category} items={s.items} />)}
+      {skills.map((s) => <SkillGroup category={s.category} items={s.items} />)}
     </div>
     <div class="status" style="margin-top:48px">
-      <span>23 technologies</span>
+      <span>{nbTechnologies} technologies</span>
       <a href="/">← retour</a>
     </div>
   </div>

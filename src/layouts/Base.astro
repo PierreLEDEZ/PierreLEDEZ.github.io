@@ -1,51 +1,62 @@
 ---
-import Nav from '../components/Nav.astro';
-import '../styles/global.css';
+import Nav from "../components/Nav.astro";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
   current?: string;
 }
-const { title = 'pld_', current = 'home' } = Astro.props;
+const { title = "pld_", current = "home" } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr" data-th="l">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pierre Le Dez — Ingénieur Développement Logiciel · Fullstack × Geodata × IA" />
-  <title>{title}</title>
-  <script is:inline>
-    (function(){
-      var t = localStorage.getItem('th');
-      var d = matchMedia('(prefers-color-scheme:dark)').matches;
-      document.documentElement.setAttribute('data-th', t || (d ? 'd' : 'l'));
-    })();
-  </script>
-</head>
-<body>
-  <Nav current={current} />
-  <slot />
-  <script is:inline>
-    // Theme toggle
-    document.getElementById('thb').addEventListener('click', function() {
-      var h = document.documentElement;
-      var n = h.getAttribute('data-th') === 'd' ? 'l' : 'd';
-      h.setAttribute('data-th', n);
-      localStorage.setItem('th', n);
-      this.textContent = n === 'd' ? '☼' : '☽';
-    });
-    document.getElementById('thb').textContent =
-      document.documentElement.getAttribute('data-th') === 'd' ? '☼' : '☽';
-
-    // Scroll reveal
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) { e.target.classList.add('v'); observer.unobserve(e.target); }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Pierre Le Dez — Ingénieur Développement Logiciel · Fullstack × Geodata × IA"
+    />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        var t = localStorage.getItem("th");
+        var d = matchMedia("(prefers-color-scheme:dark)").matches;
+        document.documentElement.setAttribute("data-th", t || (d ? "d" : "l"));
+      })();
+    </script>
+  </head>
+  <body>
+    <Nav current={current} />
+    <slot />
+    <script is:inline>
+      // Theme toggle
+      document.getElementById("thb").addEventListener("click", function () {
+        var h = document.documentElement;
+        var n = h.getAttribute("data-th") === "d" ? "l" : "d";
+        h.setAttribute("data-th", n);
+        localStorage.setItem("th", n);
+        this.textContent = n === "d" ? "☼" : "☽";
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.rv').forEach(function(el) { observer.observe(el); });
-  </script>
-</body>
+      document.getElementById("thb").textContent =
+        document.documentElement.getAttribute("data-th") === "d" ? "☼" : "☽";
+
+      // Scroll reveal
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("v");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".rv").forEach(function (el) {
+        observer.observe(el);
+      });
+    </script>
+  </body>
 </html>
