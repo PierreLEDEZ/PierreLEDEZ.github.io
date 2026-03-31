@@ -2,87 +2,19 @@
 interface Props {
   title: string;
   peek: string;
-  num: string;
   href: string;
 }
-const { title, peek, num, href } = Astro.props;
+const { title, peek, href } = Astro.props;
 ---
 
-<a class="pj rv" href={href}>
-  <h3>{title}</h3>
-  <div class="pj-peek">{peek}</div>
-  <span class="pj-num">{num}</span>
+<a class="pj-card rv group" href={href}>
+  <h3 class="text-[clamp(24px,4vw,36px)] font-bold tracking-[-0.04em] text-ghost transition-colors duration-[400ms] group-hover:text-fg max-md:text-2xl max-[480px]:text-xl">
+    {title}
+  </h3>
+  <div class="text-[11px] text-muted opacity-0 translate-y-1 transition-all duration-300 mt-0.5 group-hover:opacity-100 group-hover:translate-y-0">
+    {peek}
+  </div>
+  <span class="absolute right-4 top-1/2 -translate-y-1/2 translate-x-3 text-[22px] text-accent transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)] opacity-0 pointer-events-none group-hover:translate-x-0 group-hover:opacity-100 max-md:hidden">
+    →
+  </span>
 </a>
-
-<style>
-  .pj {
-    display: block;
-    padding: 22px 0;
-    border-top: 1px solid var(--b);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    color: inherit;
-  }
-  .pj:last-child {
-    border-bottom: 1px solid var(--b);
-  }
-  .pj:hover {
-    padding-left: 8px;
-  }
-  .pj h3 {
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    color: var(--ghost);
-    transition: color 0.4s;
-  }
-  .pj:hover h3 {
-    color: var(--fg);
-  }
-  .pj-num {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%) translateX(30px);
-    font-size: 64px;
-    font-weight: 700;
-    color: var(--ghost);
-    transition:
-      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.3s;
-    opacity: 0;
-    pointer-events: none;
-  }
-  .pj:hover .pj-num {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1;
-  }
-  .pj-peek {
-    font-size: 11px;
-    color: var(--m);
-    opacity: 0;
-    transform: translateY(4px);
-    transition: all 0.3s;
-    margin-top: 2px;
-  }
-  .pj:hover .pj-peek {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  @media (max-width: 768px) {
-    .pj-num {
-      display: none;
-    }
-    .pj h3 {
-      font-size: 24px;
-    }
-  }
-  @media (max-width: 480px) {
-    .pj h3 {
-      font-size: 20px;
-    }
-  }
-</style>

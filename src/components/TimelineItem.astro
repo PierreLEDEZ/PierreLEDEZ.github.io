@@ -8,77 +8,13 @@ interface Props {
 const { date, title, org, desc } = Astro.props;
 ---
 
-<div class="tl-item rv">
-  <div class="tl-date">{date}</div>
-  <div class="tl-title">{title}</div>
-  <div class="tl-org">{org}</div>
-  {desc && <div class="tl-desc">{desc}</div>}
+<div class="tl-dot rv py-[22px]">
+  <div class="text-[11px] text-muted2 font-normal mb-[3px]">{date}</div>
+  <div class="text-[17px] font-bold mb-[3px] max-[480px]:text-[15px]">{title}</div>
+  <div class="text-sm text-accent font-normal">{org}</div>
+  {desc && (
+    <div class="text-[13px] text-muted font-normal mt-2 leading-[1.9] max-w-[500px] max-[480px]:text-xs">
+      {desc}
+    </div>
+  )}
 </div>
-
-<style>
-  .tl-item {
-    position: relative;
-    padding: 18px 0;
-  }
-  .tl-item::before {
-    content: "";
-    position: absolute;
-    left: -30px;
-    top: 22px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    border: 2px solid var(--b);
-    background: var(--bg);
-    z-index: 1;
-    transition: all 0.3s;
-  }
-  .tl-item:hover::before {
-    border-color: var(--ac);
-    background: var(--ac);
-    box-shadow: 0 0 0 4px var(--glow);
-  }
-  .tl-item:first-child::before {
-    border-color: var(--ac);
-    background: var(--ac);
-  }
-  .tl-date {
-    font-size: 11px;
-    color: var(--m2);
-    font-weight: 300;
-    margin-bottom: 3px;
-  }
-  .tl-title {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 3px;
-  }
-  .tl-org {
-    font-size: 14px;
-    color: var(--ac);
-    font-weight: 300;
-  }
-  .tl-desc {
-    font-size: 13px;
-    color: var(--m);
-    font-weight: 300;
-    margin-top: 8px;
-    line-height: 1.9;
-    max-width: 500px;
-  }
-  @media (max-width: 768px) {
-    .tl-item::before {
-      left: -24px;
-      width: 9px;
-      height: 9px;
-    }
-  }
-  @media (max-width: 480px) {
-    .tl-title {
-      font-size: 15px;
-    }
-    .tl-desc {
-      font-size: 12px;
-    }
-  }
-</style>

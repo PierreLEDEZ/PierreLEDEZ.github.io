@@ -7,60 +7,14 @@ const { category, items } = Astro.props;
 ---
 
 <div class="rv">
-  <div class="sk-cat">{category}</div>
-  <div class="sk-items">
-    {items.map((item, i) => <span>{item}</span>)}
+  <div class="text-[13px] text-accent tracking-[0.12em] uppercase mt-[22px] mb-3 max-md:text-xs max-[480px]:text-[13px]">
+    {category}
+  </div>
+  <div class="text-sm text-muted leading-[2.8] max-md:text-[13px] max-md:leading-[3] max-[480px]:text-[13px] max-[480px]:leading-[3.2]">
+    {items.map((item) => (
+      <span class="sk-sep text-fg font-normal transition-colors duration-200 cursor-default hover:text-accent">
+        {item}
+      </span>
+    ))}
   </div>
 </div>
-
-<style>
-  .sk-cat {
-    font-size: 10px;
-    color: var(--ac);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 40px;
-    margin-bottom: 12px;
-  }
-  .rv:first-child .sk-cat {
-    margin-top: 0;
-  }
-  .sk-items {
-    font-size: 14px;
-    color: var(--m);
-    line-height: 2.8;
-  }
-  .sk-items span {
-    color: var(--fg);
-    font-weight: 400;
-    transition: color 0.2s;
-    cursor: default;
-  }
-  .sk-items span:hover {
-    color: var(--ac);
-  }
-  .sk-items span + span::before {
-    content: " · ";
-    color: var(--m2);
-    font-weight: 300;
-  }
-  @media (max-width: 768px) {
-    .sk-items {
-      font-size: 13px;
-      line-height: 3;
-    }
-    .sk-cat {
-      margin-top: 36px;
-      font-size: 11px;
-    }
-  }
-  @media (max-width: 480px) {
-    .sk-items {
-      font-size: 13px;
-      line-height: 3.2;
-    }
-    .sk-cat {
-      margin-top: 32px;
-    }
-  }
-</style>

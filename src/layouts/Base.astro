@@ -37,10 +37,7 @@ const { title = "pld_", current = "home" } = Astro.props;
         var n = h.getAttribute("data-th") === "d" ? "l" : "d";
         h.setAttribute("data-th", n);
         localStorage.setItem("th", n);
-        this.textContent = n === "d" ? "☼" : "☽";
       });
-      document.getElementById("thb").textContent =
-        document.documentElement.getAttribute("data-th") === "d" ? "☼" : "☽";
 
       // Scroll reveal
       var observer = new IntersectionObserver(

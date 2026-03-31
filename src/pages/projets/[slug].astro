@@ -1,10 +1,10 @@
 ---
-import Base from "../../layouts/Base.astro";
-import { getCollection } from "astro:content";
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map((p) => ({
+  const projects = await getCollection('projects');
+  return projects.map(p => ({
     params: { slug: p.slug },
     props: { project: p },
   }));
@@ -15,215 +15,63 @@ const { Content } = await project.render();
 const d = project.data;
 ---
 
-<Base title={`pld_ - ${d.title}`} current="projets">
-  <div class="w">
-    <div class="detail">
-      <a class="back" href="/projets/">← tous les projets</a>
-      <h2 class="rv">{d.title}</h2>
-      <div class="meta rv">
+<Base title={`pld_ — ${d.title}`} current="projets">
+  <div class="max-w-[820px] mx-auto px-12 w-full min-h-screen flex flex-col max-md:px-7 max-[480px]:px-5">
+    <div class="pt-20 pb-6">
+      <a class="text-xs text-muted inline-flex items-center gap-1.5 transition-all duration-200 py-1.5 mb-8 hover:text-accent hover:-translate-x-1" href="/projets/">
+        ← tous les projets
+      </a>
+      <h2 class="rv text-[clamp(24px,4vw,36px)] font-bold tracking-[-0.04em] mb-2.5 max-md:text-2xl max-[480px]:text-xl">
+        {d.title}
+      </h2>
+      <div class="rv text-xs text-muted mb-7 flex gap-4 flex-wrap">
         <span>{d.ctx}</span>
         <span>{d.tags.length} technologies</span>
       </div>
 
-      {
-        d.image ? (
-          <div class="img rv">
-            <img src={d.image} alt={d.title} />
-          </div>
-        ) : (
-          <div class="img img-empty rv" />
-        )
-      }
+      {d.image ? (
+        <div class="rv w-full aspect-video rounded-xl mb-7 overflow-hidden">
+          <img class="w-full h-full object-cover" src={d.image} alt={d.title} />
+        </div>
+      ) : (
+        <div class="rv img-empty-gradient w-full aspect-video rounded-xl mb-7 overflow-hidden relative"></div>
+      )}
 
-      <div class="desc rv">
+      <div class="rv text-sm text-muted font-normal leading-8 mb-7 max-w-[580px] [&_p]:mb-3">
         <Content />
       </div>
 
-      <div class="tags rv">
-        {d.tags.map((t) => <span>{t}</span>)}
+      <div class="rv flex gap-2 flex-wrap mb-7">
+        {d.tags.map(t => (
+          <span class="text-xs px-3.5 py-2 bg-card rounded-lg text-muted transition-all duration-200 hover:bg-card-hover hover:-translate-y-px">
+            {t}
+          </span>
+        ))}
       </div>
 
-      <div class="links rv">
-        {
-          d.github ? (
-            <a class="pj-link" href={d.github} target="_blank">
-              <svg viewBox="0 0 24 24">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-              </svg>
-              Code source
-            </a>
-          ) : (
-            <span class="pj-link disabled">
-              <svg viewBox="0 0 24 24">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-              </svg>
-              Privé
-            </span>
-          )
-        }
-        {
-          d.link && (
-            <a class="pj-link" href={d.link} target="_blank">
-              <svg viewBox="0 0 24 24">
-                <>
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </>
-              </svg>
-              Voir le projet
-            </a>
-          )
-        }
+      <div class="rv flex gap-2.5 flex-wrap">
+        {d.github ? (
+          <a class="pj-link" href={d.github} target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Code source
+          </a>
+        ) : (
+          <span class="pj-link opacity-30 cursor-default pointer-events-none">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Privé
+          </span>
+        )}
+        {d.link && (
+          <a class="pj-link" href={d.link} target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir le projet
+          </a>
+        )}
       </div>
     </div>
-    <div class="status" style="margin-top:48px">
+    <div class="border-t border-border py-4 flex justify-between text-[11px] text-muted2 font-normal mt-auto max-md:flex-wrap max-md:gap-2">
       <span>{d.ctx}</span>
-      <a href="/projets/">← retour</a>
+      <a class="text-muted transition-colors duration-200 hover:text-accent" href="/projets/">← retour</a>
     </div>
   </div>
 </Base>
-
-<style>
-  .detail {
-    padding: 100px 0 40px;
-  }
-  .back {
-    font-size: 12px;
-    color: var(--m);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s;
-    padding: 6px 0;
-    margin-bottom: 32px;
-  }
-  .back:hover {
-    color: var(--ac);
-    transform: translateX(-4px);
-  }
-  h2 {
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin-bottom: 10px;
-  }
-  .meta {
-    font-size: 12px;
-    color: var(--m);
-    margin-bottom: 28px;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 12px;
-    margin-bottom: 28px;
-    overflow: hidden;
-  }
-  .img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .img-empty {
-    background: linear-gradient(
-      135deg,
-      var(--img1) 0%,
-      var(--img2) 40%,
-      var(--img1) 60%,
-      var(--img2) 100%
-    );
-    position: relative;
-  }
-  .img-empty::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at center,
-      transparent 40%,
-      var(--bg) 100%
-    );
-  }
-  .desc {
-    font-size: 14px;
-    color: var(--m);
-    font-weight: 300;
-    line-height: 2;
-    margin-bottom: 28px;
-    max-width: 580px;
-  }
-  .desc :global(p) {
-    margin-bottom: 12px;
-  }
-  .tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-  .tags span {
-    font-size: 12px;
-    padding: 8px 14px;
-    background: var(--card);
-    border-radius: 8px;
-    color: var(--m);
-    transition: all 0.2s;
-  }
-  .tags span:hover {
-    background: var(--ch);
-    transform: translateY(-1px);
-  }
-  .links {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .pj-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--m);
-    padding: 10px 20px;
-    border: 1px solid var(--b);
-    border-radius: 100px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .pj-link:hover {
-    color: var(--ac);
-    border-color: var(--ac);
-    background: var(--as);
-    transform: translateY(-2px);
-  }
-  .pj-link svg {
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .pj-link.disabled {
-    opacity: 0.3;
-    cursor: default;
-    pointer-events: none;
-  }
-  @media (max-width: 768px) {
-    h2 {
-      font-size: 24px;
-    }
-    .img {
-      aspect-ratio: 4/3;
-    }
-  }
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 20px;
-    }
-  }
-</style>
