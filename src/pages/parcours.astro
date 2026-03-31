@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import TimelineItem from '../components/TimelineItem.astro';
+import { timeline } from '../data/timeline';
+---
+
+<Base title="pld_ — Parcours" current="parcours">
+  <div class="w">
+    <div class="sec">
+      <div class="sec-label rv">Parcours</div>
+      <div class="tl">
+        {timeline.map(t => (
+          <TimelineItem date={t.date} title={t.title} org={t.org} desc={t.desc} />
+        ))}
+      </div>
+    </div>
+    <div class="status" style="margin-top:48px">
+      <span>ENIB → CERV → Siradel</span>
+      <span>TOEIC 935</span>
+      <a href="/">← retour</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .tl { position: relative; padding-left: 30px; }
+  .tl::before {
+    content: ''; position: absolute; left: 5px; top: 12px; bottom: 12px;
+    width: 1px; background: var(--b);
+  }
+  @media (max-width: 768px) { .tl { padding-left: 24px; } }
+</style>

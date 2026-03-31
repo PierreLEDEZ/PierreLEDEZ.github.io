@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="pld_ — Projets" current="projets">
+  <div class="w">
+    <div class="sec">
+      <div class="sec-label rv">Projets</div>
+      {projects.map((p, i) => (
+        <ProjectCard
+          title={p.data.title}
+          peek={`${p.data.ctx} — ${p.data.tags.slice(0, 3).join(', ')}`}
+          num={String(i + 1).padStart(2, '0')}
+          href={`/projets/${p.slug}/`}
+        />
+      ))}
+    </div>
+    <div class="status" style="margin-top:48px">
+      <span>{projects.length} projets</span>
+      <a href="/">← retour</a>
+    </div>
+  </div>
+</Base>

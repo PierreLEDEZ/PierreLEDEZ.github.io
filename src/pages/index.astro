@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="pld_ — Pierre Le Dez" current="home">
+  <div class="hero">
+    <div class="hero-line"></div>
+    <div class="hero-eye">Ingénieur logiciel · Bretagne, FR</div>
+    <h1>Pierre Le Dez<br /><span class="ac">fullstack × geodata × ia</span></h1>
+    <p class="hero-bio">
+      Je conçois des solutions à la croisée du web, des données géospatiales
+      et de l'intelligence artificielle — de l'architecture backend aux interfaces utilisateurs.
+    </p>
+    <div class="hero-links">
+      <a class="pill" href="https://linkedin.com/in/pierre-le-dez/" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin
+      </a>
+      <a class="pill" href="https://github.com/PierreLEDEZ" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        github
+      </a>
+      <a class="pill" href="mailto:p5ledez@gmail.com">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        email
+      </a>
+      <a class="pill" href="/projets/" style="border-color:var(--ac);color:var(--ac)">voir les projets →</a>
+    </div>
+    <div style="flex:1"></div>
+    <div class="status">
+      <span><span class="sdot"></span>disponible</span>
+      <span>48.0833° N, 1.9167° W</span>
+      <a href="mailto:p5ledez@gmail.com">p5ledez@gmail.com</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 0 48px; max-width: 820px; margin: 0 auto;
+  }
+  .hero-line {
+    width: 3px; height: 60px; background: linear-gradient(to bottom, var(--ac), transparent);
+    border-radius: 2px; margin-bottom: 36px; animation: lineGrow .8s ease forwards; transform-origin: top;
+  }
+  .hero-eye { font-size: 13px; color: var(--m); font-weight: 300; letter-spacing: 1px; margin-bottom: 28px; animation: fadeUp .6s .15s ease both; }
+  .hero h1 { font-size: clamp(32px,5.5vw,48px); font-weight: 700; letter-spacing: -.04em; line-height: 1.2; margin-bottom: 28px; animation: fadeUp .6s .25s ease both; }
+  .hero h1 .ac { color: var(--ac); }
+  .hero h1::after { content: '▍'; color: var(--ac); font-weight: 300; animation: blink 1s step-end infinite; margin-left: 3px; }
+  .hero-bio { font-size: 15px; color: var(--m); font-weight: 300; max-width: 540px; line-height: 1.9; margin-bottom: 44px; animation: fadeUp .6s .35s ease both; }
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp .6s .45s ease both; }
+  .hero .status { animation: fadeUp .6s .55s ease both; }
+  @media (max-width: 768px) { .hero { padding: 0 28px; } .hero h1 { font-size: 32px; } .hero-bio { font-size: 14px; } .hero-links { gap: 8px; } }
+  @media (max-width: 480px) { .hero { padding: 0 20px; } .hero h1 { font-size: 26px; } .hero-bio { font-size: 13px; margin-bottom: 28px; } .hero-line { height: 40px; margin-bottom: 24px; } }
+</style>
