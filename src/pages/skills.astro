@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import PageSection from "../components/PageSection.astro";
 import SkillGroup from "../components/SkillGroup.astro";
 import { skills } from "../data/skills";
 
@@ -7,16 +8,13 @@ const nbTechnologies = skills.reduce((acc, { items }) => items.length + acc, 0);
 ---
 
 <Base title="pld_ - Skills" current="skills">
-  <div class="max-w-[820px] mx-auto px-12 w-full min-h-screen flex flex-col max-md:px-7 max-[480px]:px-5">
-    <div class="flex flex-col pt-20 pb-6">
-      <div class="sec-label text-[15px] text-accent font-bold tracking-[.15em] uppercase mb-[22px] flex items-center gap-3 rv">
-        Skills
-      </div>
+  <PageSection title="Skills">
+    <div class="space-y-8">
       {skills.map((s) => <SkillGroup category={s.category} items={s.items} />)}
     </div>
-    <div class="border-t border-border py-4 flex justify-between text-[11px] text-muted2 font-normal mt-auto max-md:flex-wrap max-md:gap-2">
+    <Fragment slot="status">
       <span>{nbTechnologies} technologies</span>
       <a class="text-muted transition-colors duration-200 hover:text-accent" href="/">← retour</a>
-    </div>
-  </div>
+    </Fragment>
+  </PageSection>
 </Base>

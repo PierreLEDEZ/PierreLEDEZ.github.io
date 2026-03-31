@@ -141,11 +141,17 @@
 .tl-dot {
   @apply relative;
 }
+.tl-dot:first-child {
+  @apply pt-0;
+}
 .tl-dot::before {
   content: '';
   @apply absolute w-[11px] h-[11px] rounded-full border-2 border-border bg-bg z-[1] transition-all duration-300;
   left: -30px;
   top: 22px;
+}
+.tl-dot:first-child::before {
+  top: 0;
 }
 .tl-dot:hover::before {
   @apply border-accent bg-accent;
@@ -163,7 +169,7 @@
   content: '';
   @apply absolute w-px bg-border;
   left: 5px;
-  top: 12px;
+  top: 0;
   bottom: 12px;
 }
 
