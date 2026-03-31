@@ -12,11 +12,12 @@ const projects = (await getCollection("projects")).sort(
 <Base title="pld_ - Projets" current="projets">
   <PageSection title="Projets">
     {
-      projects.map((p) => (
+      projects.map((p, i) => (
         <ProjectCard
           title={p.data.title}
           peek={`${p.data.ctx} — ${p.data.tags.slice(0, 3).join(", ")}`}
           href={`/projets/${p.slug}/`}
+          delay={0.7 + i * 0.08}
         />
       ))
     }

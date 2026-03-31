@@ -3,11 +3,12 @@ interface Props {
   title: string;
   peek: string;
   href: string;
+  delay?: number;
 }
-const { title, peek, href } = Astro.props;
+const { title, peek, href, delay } = Astro.props;
 ---
 
-<a class="pj-card rv group" href={href}>
+<a class="pj-card page-item group" href={href} style={delay !== undefined ? `--d:${delay}s` : undefined}>
   <h3 class="text-[clamp(24px,4vw,36px)] font-bold tracking-[-0.04em] text-ghost transition-colors duration-[400ms] group-hover:text-fg max-md:text-2xl max-[480px]:text-xl">
     {title}
   </h3>

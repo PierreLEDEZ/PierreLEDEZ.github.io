@@ -2,11 +2,12 @@
 interface Props {
   category: string;
   items: string[];
+  delay?: number;
 }
-const { category, items } = Astro.props;
+const { category, items, delay } = Astro.props;
 ---
 
-<div class="rv">
+<div class="page-item" style={delay !== undefined ? `--d:${delay}s` : undefined}>
   <div class="text-[13px] text-accent tracking-[0.12em] uppercase mb-3 max-md:text-xs max-[480px]:text-[13px]">
     {category}
   </div>

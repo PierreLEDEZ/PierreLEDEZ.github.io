@@ -9,12 +9,13 @@ import { timeline } from "../data/timeline";
   <PageSection title="Parcours">
     <div class="tl-line max-md:pl-6">
       {
-        timeline.map((t) => (
+        timeline.map((t, i) => (
           <TimelineItem
             date={t.date}
             title={t.title}
             org={t.org}
             desc={t.desc}
+            delay={0.7 + i * 0.08}
           />
         ))
       }

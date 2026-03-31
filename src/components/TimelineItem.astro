@@ -4,11 +4,12 @@ interface Props {
   title: string;
   org: string;
   desc?: string;
+  delay?: number;
 }
-const { date, title, org, desc } = Astro.props;
+const { date, title, org, desc, delay } = Astro.props;
 ---
 
-<div class="tl-dot rv py-[22px]">
+<div class="tl-dot page-item py-[22px]" style={delay !== undefined ? `--d:${delay}s` : undefined}>
   <div class="text-[11px] text-muted2 font-normal mb-[3px]">{date}</div>
   <div class="text-[17px] font-bold mb-[3px] max-[480px]:text-[15px]">{title}</div>
   <div class="text-sm text-accent font-normal">{org}</div>

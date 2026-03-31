@@ -10,7 +10,7 @@ const nbTechnologies = skills.reduce((acc, { items }) => items.length + acc, 0);
 <Base title="pld_ - Skills" current="skills">
   <PageSection title="Skills">
     <div class="space-y-8">
-      {skills.map((s) => <SkillGroup category={s.category} items={s.items} />)}
+      {skills.map((s, i) => <SkillGroup category={s.category} items={s.items} delay={0.7 + i * 0.08} />)}
     </div>
     <Fragment slot="status">
       <span>{nbTechnologies} technologies</span>
