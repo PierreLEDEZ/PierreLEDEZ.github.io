@@ -6,6 +6,8 @@ github: ""
 link: ""
 image: "/images/projects/analyse-plu.png"
 order: 1
+lang: "fr"
+alternateSlug: "plu-analysis"
 ---
 
 Plateforme d'analyse automatisée de documents d'urbanisme (PLU) exploitant l'intelligence artificielle pour la recherche et la compréhension sémantique. Le système permet aux utilisateurs de poser des questions en langage naturel et d'obtenir des réponses contextualisées à partir de milliers de pages de documents réglementaires.

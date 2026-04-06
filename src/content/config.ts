@@ -10,6 +10,8 @@ const projects = defineCollection({
     link: z.string().optional().default(''),
     image: z.string().optional().default(''),
     order: z.number(),
+    lang: z.enum(['en', 'fr']),
+    alternateSlug: z.string().optional().default(''),
   }),
 });
 

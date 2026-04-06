@@ -1,0 +1,16 @@
+---
+import ProjectDetailPage from '../../../components/pages/ProjectDetailPage.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const frProjects = projects.filter((p) => p.data.lang === 'fr');
+  return frProjects.map((p) => ({
+    params: { slug: p.slug.replace(/^fr\//, '') },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+---
+<ProjectDetailPage lang="fr" project={project} />

@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+import type { Lang } from '../../i18n/types';
+import { t, localePath } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const heroLines = JSON.stringify([
+  { text: 'Pierre Le Dez', colored: false },
+  { text: t(lang, 'home.heroLine2'), colored: true },
+]);
+---
+
+<Base title="pld_ - Pierre Le Dez" current="home" lang={lang}>
+  <div class="min-h-screen flex flex-col justify-center px-12 max-w-[820px] mx-auto max-md:px-7 max-[480px]:px-5">
+    <div class="w-[3px] h-[60px] rounded-sm mb-9 origin-top animate-line-grow max-[480px]:h-10 max-[480px]:mb-6" style="background:linear-gradient(to bottom, var(--ac), transparent)"></div>
+    <div class="text-[13px] text-muted font-normal tracking-wide mb-7 animate-fade-up-1">
+      {t(lang, 'home.subtitle')}
+    </div>
+    <h1 id="hero-title" class="hero-cursor text-[clamp(32px,5.5vw,48px)] font-bold tracking-[-0.04em] leading-[1.2] mb-7 min-h-[1.2em] max-md:text-[32px] max-[480px]:text-[26px]"></h1>
+    <p id="hero-bio" class="text-[15px] text-muted font-normal max-w-[540px] leading-[1.9] mb-11 max-md:text-sm max-[480px]:text-[13px] max-[480px]:mb-7">
+      {t(lang, 'home.bio')}
+    </p>
+    <div id="hero-links" class="flex gap-3 flex-wrap max-md:gap-2">
+      <a
+        class="pill"
+        href="https://linkedin.com/in/pierre-le-dez/"
+        target="_blank">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+        linkedin
+      </a>
+      <a class="pill" href="https://github.com/PierreLEDEZ" target="_blank">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        github
+      </a>
+      <a class="pill" href="mailto:p5ledez@gmail.com">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+        email
+      </a>
+      <a class="pill border-accent !text-accent" href={localePath(lang, 'projects')}>{t(lang, 'home.viewProjects')}</a>
+    </div>
+    <div class="flex-1"></div>
+    <div class="border-t border-border py-4 flex justify-between text-[11px] text-muted2 font-normal mt-auto animate-fade-up-5 max-md:flex-wrap max-md:gap-2">
+      <span><span class="sdot"></span>{t(lang, 'home.available')}</span>
+      <span>48.0833° N, 1.9167° W</span>
+      <a class="text-muted transition-colors duration-200 hover:text-accent" href="mailto:p5ledez@gmail.com">p5ledez@gmail.com</a>
+    </div>
+  </div>
+</Base>
+
+<script is:inline define:vars={{ heroLines }}>
+  (function() {
+    var el = document.getElementById('hero-title');
+    var bio = document.getElementById('hero-bio');
+    var links = document.getElementById('hero-links');
+    if (!el) return;
+
+    bio.style.opacity = '0';
+    bio.style.transform = 'translateY(14px)';
+    links.style.opacity = '0';
+    links.style.transform = 'translateY(14px)';
+
+    var textNode = document.createTextNode('');
+    el.appendChild(textNode);
+
+    var lines = JSON.parse(heroLines);
+    var lineIdx = 0, charIdx = 0;
+    var speed = 50, linePause = 300;
+    var currentTarget = textNode;
+
+    function revealRest() {
+      bio.style.transition = 'opacity .6s ease, transform .6s ease';
+      bio.style.opacity = '1';
+      bio.style.transform = 'translateY(0)';
+      setTimeout(function() {
+        links.style.transition = 'opacity .6s ease, transform .6s ease';
+        links.style.opacity = '1';
+        links.style.transform = 'translateY(0)';
+      }, 200);
+    }
+
+    function type() {
+      if (lineIdx >= lines.length) {
+        revealRest();
+        return;
+      }
+      var line = lines[lineIdx];
+      if (charIdx === 0 && lineIdx > 0) {
+        el.appendChild(document.createElement('br'));
+        var span = document.createElement('span');
+        span.className = 'text-accent';
+        el.appendChild(span);
+        currentTarget = span;
+      }
+      if (charIdx < line.text.length) {
+        if (line.colored) {
+          currentTarget.textContent += line.text[charIdx];
+        } else {
+          textNode.textContent += line.text[charIdx];
+        }
+        charIdx++;
+        setTimeout(type, speed);
+      } else {
+        lineIdx++;
+        charIdx = 0;
+        setTimeout(type, linePause);
+      }
+    }
+
+    setTimeout(type, 500);
+  })();
+</script>

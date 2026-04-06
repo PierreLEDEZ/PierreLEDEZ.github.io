@@ -6,6 +6,8 @@ github: ""
 link: ""
 image: "/images/projects/services-geonum.png"
 order: 4
+lang: "fr"
+alternateSlug: "geonum-services"
 ---
 
 Plateformes combinant applications web, automatisation de workflows et traitement de données spatiales à grande échelle.

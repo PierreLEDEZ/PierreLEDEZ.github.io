@@ -6,6 +6,8 @@ github: ""
 link: ""
 image: "/images/projects/gestion-competences.png"
 order: 2
+lang: "fr"
+alternateSlug: "skills-management"
 ---
 
 Plateforme interne de gestion des collaborateurs et de leurs expertises. Traçabilité des projets réalisés, cartographie des compétences par équipe, et génération automatique de CVs formatés pour les réponses aux appels d'offres.

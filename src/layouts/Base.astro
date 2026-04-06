@@ -1,23 +1,28 @@
 ---
 import Nav from "../components/Nav.astro";
 import "../styles/global.css";
+import type { Lang } from "../i18n/types";
+import { t } from "../i18n/utils";
 
 interface Props {
   title?: string;
   current?: string;
+  lang: Lang;
 }
-const { title = "pld_", current = "home" } = Astro.props;
+const { title = "pld_", current = "home", lang } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="fr" data-th="l">
+<html lang={lang} data-th="l">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Pierre Le Dez — Ingénieur Développement Logiciel · Fullstack × Geodata × IA"
+      content={t(lang, 'meta.description')}
     />
+    <link rel="alternate" hreflang="en" href={`https://PierreLEDEZ.github.io/en/`} />
+    <link rel="alternate" hreflang="fr" href={`https://PierreLEDEZ.github.io/fr/`} />
     <title>{title}</title>
     <script is:inline>
       (function () {
@@ -28,7 +33,7 @@ const { title = "pld_", current = "home" } = Astro.props;
     </script>
   </head>
   <body>
-    <Nav current={current} />
+    <Nav current={current} lang={lang} />
     <slot />
     <script is:inline>
       // Theme toggle

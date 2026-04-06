@@ -5,4 +5,12 @@ export default defineConfig({
   site: 'https://PierreLEDEZ.github.io',
   base: '/',
   integrations: [tailwind()],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr'],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+  },
 });

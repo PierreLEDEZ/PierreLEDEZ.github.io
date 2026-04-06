@@ -1,16 +1,22 @@
 ---
-const { current = "home" } = Astro.props;
-const links = [
-  { id: "home", href: "/", label: "home" },
-  { id: "skills", href: "/skills/", label: "skills" },
-  { id: "projets", href: "/projets/", label: "projets" },
-  { id: "parcours", href: "/parcours/", label: "parcours" },
-];
+import type { Lang } from "../i18n/types";
+import { getNavLinks, getAlternateLang, getAlternateUrl, localePath } from "../i18n/utils";
+import type { RouteId } from "../i18n/types";
+
+interface Props {
+  current?: string;
+  lang: Lang;
+}
+const { current = "home", lang } = Astro.props;
+
+const links = getNavLinks(lang);
+const altLang = getAlternateLang(lang);
+const altUrl = getAlternateUrl(lang, (current as RouteId) || "home");
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-[100] backdrop-blur-[16px] bg-nav border-b border-border">
   <div class="px-12 h-14 flex items-center justify-between max-md:px-7 max-[480px]:px-4">
-    <a class="font-bold text-[16px] text-accent transition-opacity duration-200 hover:opacity-70" href="/">pld_</a>
+    <a class="font-bold text-[16px] text-accent transition-opacity duration-200 hover:opacity-70" href={localePath(lang, 'home')}>pld_</a>
     <div class="flex gap-8 items-center max-md:gap-5 max-[480px]:gap-3.5">
       {
         links.map((l) => (
@@ -22,10 +28,17 @@ const links = [
           </a>
         ))
       }
+      <a
+        class="text-[11px] font-bold uppercase tracking-wider text-muted transition-colors duration-200 hover:text-accent"
+        href={altUrl}
+        aria-label={`Switch to ${altLang === 'en' ? 'English' : 'Français'}`}
+      >
+        {altLang}
+      </a>
       <button
         class="bg-transparent border-none text-muted cursor-pointer w-9 h-9 rounded-full transition-all duration-200 flex items-center justify-center hover:text-accent hover:bg-accent-subtle"
         id="thb"
-        aria-label="Thème"
+        aria-label="Theme"
       >
         <svg class="icon-sun w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="5"></circle>

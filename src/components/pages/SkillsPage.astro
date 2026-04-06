@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageSection from '../PageSection.astro';
+import SkillGroup from '../SkillGroup.astro';
+import type { Lang } from '../../i18n/types';
+import { t, localePath } from '../../i18n/utils';
+import { skills } from '../../data/skills';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const data = skills[lang];
+const nbTechnologies = data.reduce((acc, { items }) => items.length + acc, 0);
+---
+
+<Base title="pld_ - Skills" current="skills" lang={lang}>
+  <PageSection title={t(lang, 'skills.title')}>
+    <div class="space-y-8">
+      {data.map((s, i) => <SkillGroup category={s.category} items={s.items} delay={0.7 + i * 0.08} />)}
+    </div>
+    <Fragment slot="status">
+      <span>{nbTechnologies} {t(lang, 'skills.technologies')}</span>
+      <a class="text-muted transition-colors duration-200 hover:text-accent" href={localePath(lang, 'home')}>{t(lang, 'skills.back')}</a>
+    </Fragment>
+  </PageSection>
+</Base>
