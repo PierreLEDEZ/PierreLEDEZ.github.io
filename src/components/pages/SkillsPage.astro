@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageSection from '../PageSection.astro';
 import SkillGroup from '../SkillGroup.astro';
 import type { Lang } from '../../i18n/types';
-import { t, localePath } from '../../i18n/utils';
+import { t, localePath, getAlternateUrl } from '../../i18n/utils';
 import { skills } from '../../data/skills';
 
 interface Props {
@@ -14,7 +14,13 @@ const data = skills[lang];
 const nbTechnologies = data.reduce((acc, { items }) => items.length + acc, 0);
 ---
 
-<Base title="pld_ - Skills" current="skills" lang={lang}>
+<Base
+  title="pld_ - Skills"
+  current="skills"
+  lang={lang}
+  description={t(lang, 'skills.description')}
+  alternateUrl={getAlternateUrl(lang, 'skills')}
+>
   <PageSection title={t(lang, 'skills.title')}>
     <div class="space-y-8">
       {data.map((s, i) => <SkillGroup category={s.category} items={s.items} delay={0.7 + i * 0.08} />)}

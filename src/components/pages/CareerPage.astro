@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageSection from '../PageSection.astro';
 import TimelineItem from '../TimelineItem.astro';
 import type { Lang } from '../../i18n/types';
-import { t, localePath } from '../../i18n/utils';
+import { t, localePath, getAlternateUrl } from '../../i18n/utils';
 import { timeline } from '../../data/timeline';
 
 interface Props {
@@ -13,7 +13,13 @@ const { lang } = Astro.props;
 const data = timeline[lang];
 ---
 
-<Base title={`pld_ - ${t(lang, 'career.title')}`} current="career" lang={lang}>
+<Base
+  title={`pld_ - ${t(lang, 'career.title')}`}
+  current="career"
+  lang={lang}
+  description={t(lang, 'career.description')}
+  alternateUrl={getAlternateUrl(lang, 'career')}
+>
   <PageSection title={t(lang, 'career.title')}>
     <div class="tl-line max-md:pl-6">
       {
