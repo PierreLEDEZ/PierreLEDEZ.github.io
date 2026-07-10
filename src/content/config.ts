@@ -12,6 +12,10 @@ const projects = defineCollection({
     order: z.number(),
     lang: z.enum(['en', 'fr']),
     alternateSlug: z.string().optional().default(''),
+    personal: z.boolean().optional().default(false),
+    // Set to false to hide a project from the site entirely (list + detail
+    // page). Coupled across languages via alternateSlug — see src/lib/projects.ts.
+    published: z.boolean().optional().default(true),
   }),
 });
 

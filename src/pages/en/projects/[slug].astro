@@ -1,12 +1,11 @@
 ---
 import ProjectDetailPage from '../../../components/pages/ProjectDetailPage.astro';
-import { getCollection } from 'astro:content';
+import { getVisibleProjects, stripLangPrefix } from '../../../lib/projects';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  const enProjects = projects.filter((p) => p.data.lang === 'en');
+  const enProjects = await getVisibleProjects('en');
   return enProjects.map((p) => ({
-    params: { slug: p.slug.replace(/^en\//, '') },
+    params: { slug: stripLangPrefix(p.slug) },
     props: { project: p },
   }));
 }
