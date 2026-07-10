@@ -3,36 +3,67 @@ import Base from '../../layouts/Base.astro';
 import PageSection from '../PageSection.astro';
 import ProjectCard from '../ProjectCard.astro';
 import type { Lang } from '../../i18n/types';
-import { t, localePath, projectPath } from '../../i18n/utils';
-import { getCollection } from 'astro:content';
+import { t, localePath, projectPath, getAlternateUrl } from '../../i18n/utils';
+import { PER_PAGE, pad } from '../../config';
+import { getVisibleProjects, stripLangPrefix } from '../../lib/projects';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 
-const allProjects = await getCollection('projects');
-const projects = allProjects
-  .filter((p) => p.data.lang === lang)
-  .sort((a, b) => a.data.order - b.data.order);
+const projects = await getVisibleProjects(lang);
 
-// Strip lang prefix from slug (e.g. "en/plu-analysis" → "plu-analysis")
-function stripLangPrefix(slug: string): string {
-  return slug.replace(/^(en|fr)\//, '');
-}
+const pageCount = Math.ceil(projects.length / PER_PAGE);
 ---
 
-<Base title={`pld_ - ${t(lang, 'projects.title')}`} current="projects" lang={lang}>
+<Base
+  title={`pld_ - ${t(lang, 'projects.title')}`}
+  current="projects"
+  lang={lang}
+  description={t(lang, 'projects.description')}
+  alternateUrl={getAlternateUrl(lang, 'projects')}
+>
   <PageSection title={t(lang, 'projects.title')}>
+    <div id="pj-list">
+      {
+        projects.map((p, i) => (
+          <ProjectCard
+            title={p.data.title}
+            peek={`${p.data.ctx} — ${p.data.tags.slice(0, 3).join(', ')}`}
+            href={projectPath(lang, stripLangPrefix(p.slug))}
+            delay={0.7 + i * 0.08}
+            personal={p.data.personal}
+            personalLabel={t(lang, 'projects.personal')}
+          />
+        ))
+      }
+    </div>
     {
-      projects.map((p, i) => (
-        <ProjectCard
-          title={p.data.title}
-          peek={`${p.data.ctx} — ${p.data.tags.slice(0, 3).join(', ')}`}
-          href={projectPath(lang, stripLangPrefix(p.slug))}
-          delay={0.7 + i * 0.08}
-        />
-      ))
+      pageCount > 1 && (
+        <nav id="pj-pager" class="page-item mt-10 flex items-center justify-center gap-6" style="--d:1.1s">
+          <button
+            type="button"
+            data-pg="prev"
+            class="text-[18px] leading-none text-accent transition-all duration-200 hover:text-fg disabled:text-muted disabled:opacity-25 disabled:pointer-events-none"
+            aria-label={t(lang, 'projects.prevPage')}
+            disabled
+          >
+            ←
+          </button>
+          <span id="pj-indicator" class="text-[13px] text-muted tracking-[.2em] tabular-nums">
+            {pad(1)} / {pad(pageCount)}
+          </span>
+          <button
+            type="button"
+            data-pg="next"
+            class="text-[18px] leading-none text-accent transition-all duration-200 hover:text-fg disabled:text-muted disabled:opacity-25 disabled:pointer-events-none"
+            aria-label={t(lang, 'projects.nextPage')}
+          >
+            →
+          </button>
+        </nav>
+      )
     }
     <Fragment slot="status">
       <span>{projects.length} {t(lang, 'projects.count')}</span>
@@ -40,3 +71,77 @@ function stripLangPrefix(slug: string): string {
     </Fragment>
   </PageSection>
 </Base>
+
+<script>
+  import { PER_PAGE, pad } from '../../config';
+
+  const list = document.getElementById('pj-list');
+  const pager = document.getElementById('pj-pager');
+
+  if (list && pager) {
+    const cards = Array.from(list.querySelectorAll('.pj-card')) as HTMLElement[];
+    const indicator = document.getElementById('pj-indicator');
+    const prevBtn = pager.querySelector('[data-pg="prev"]') as HTMLButtonElement;
+    const nextBtn = pager.querySelector('[data-pg="next"]') as HTMLButtonElement;
+    const pageCount = Math.ceil(cards.length / PER_PAGE);
+
+    let current = 0;
+
+    function render(animate: boolean) {
+      cards.forEach((card, i) => {
+        const onPage = Math.floor(i / PER_PAGE) === current;
+        card.style.display = onPage ? '' : 'none';
+        if (onPage && animate) {
+          card.style.setProperty('--d', `${(i % PER_PAGE) * 0.08}s`);
+          card.style.animation = 'none';
+          void card.offsetWidth; // force reflow to replay the entrance animation
+          card.style.animation = '';
+        }
+      });
+      if (indicator) indicator.textContent = `${pad(current + 1)} / ${pad(pageCount)}`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === pageCount - 1;
+    }
+
+    function go(delta: number) {
+      const next = current + delta;
+      if (next < 0 || next > pageCount - 1) return;
+      current = next;
+      render(true);
+    }
+
+    // Reserve the height of a full (PER_PAGE-card) page on the list so the
+    // pager keeps the same vertical position on the shorter last page.
+    // Measured live because card height varies with viewport (clamp font,
+    // title wrapping). The show → measure → restore is synchronous, so the
+    // browser never paints the intermediate state — no flicker.
+    function reserveFullPageHeight() {
+      list.style.minHeight = '';
+      const saved = cards.map((c) => c.style.display);
+      cards.forEach((card, i) => {
+        card.style.display = i < PER_PAGE ? '' : 'none';
+      });
+      const full = list.offsetHeight;
+      cards.forEach((card, i) => {
+        card.style.display = saved[i];
+      });
+      list.style.minHeight = `${full}px`;
+    }
+
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(-1);
+      else if (e.key === 'ArrowRight') go(1);
+    });
+
+    render(false); // initial: hide pages 2+, keep the natural page-entrance stagger
+    reserveFullPageHeight();
+
+    let resizeTimer: number;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(reserveFullPageHeight, 150);
+    });
+  }
+</script>

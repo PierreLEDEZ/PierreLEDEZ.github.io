@@ -1,11 +1,11 @@
 ---
 title: "Services Géonumériques"
-ctx: "Siradel"
+ctx: "Siradel · 2023"
 tags: ["Java", "Spring Boot", "PostgreSQL", "Angular"]
 github: ""
 link: ""
-image: "/images/projects/services-geonum.png"
-order: 4
+image: ""
+order: 7
 lang: "fr"
 alternateSlug: "geonum-services"
 ---

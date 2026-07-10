@@ -4,13 +4,18 @@ interface Props {
   peek: string;
   href: string;
   delay?: number;
+  personal?: boolean;
+  personalLabel?: string;
 }
-const { title, peek, href, delay } = Astro.props;
+const { title, peek, href, delay, personal = false, personalLabel } = Astro.props;
 ---
 
 <a class="pj-card page-item group" href={href} style={delay !== undefined ? `--d:${delay}s` : undefined}>
   <h3 class="text-[clamp(24px,4vw,36px)] font-bold tracking-[-0.04em] text-ghost transition-colors duration-[400ms] group-hover:text-fg max-md:text-2xl max-[480px]:text-xl">
     {title}
+    {personal && (
+      <sup class="ml-2 align-super text-[10px] font-normal tracking-normal text-accent opacity-70">{personalLabel}</sup>
+    )}
   </h3>
   <div class="text-[11px] text-muted opacity-0 translate-y-1 transition-all duration-300 mt-0.5 group-hover:opacity-100 group-hover:translate-y-0">
     {peek}

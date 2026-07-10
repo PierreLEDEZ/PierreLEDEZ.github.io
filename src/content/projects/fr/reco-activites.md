@@ -4,8 +4,8 @@ ctx: "CERV · 2021 · Recherche"
 tags: ["Python", "Keras", "OpenCV", "Cython", "Flask", "React"]
 github: ""
 link: ""
-image: "/images/projects/reco-activites.png"
-order: 5
+image: ""
+order: 10
 lang: "fr"
 alternateSlug: "activity-recognition"
 ---

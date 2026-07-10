@@ -4,8 +4,8 @@ ctx: "Siradel · 2023"
 tags: ["Python", "FastAPI", "React", "PostgreSQL"]
 github: ""
 link: ""
-image: "/images/projects/gestion-competences.png"
-order: 2
+image: ""
+order: 8
 lang: "en"
 alternateSlug: "gestion-competences"
 ---

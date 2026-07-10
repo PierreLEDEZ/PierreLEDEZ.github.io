@@ -4,8 +4,8 @@ ctx: "Siradel · 2024 · Production"
 tags: ["Python", "FastAPI", "React", "OpenLayers", "ChromaDB", "PostGIS"]
 github: ""
 link: ""
-image: "/images/projects/analyse-plu.png"
-order: 1
+image: ""
+order: 5
 lang: "fr"
 alternateSlug: "plu-analysis"
 ---

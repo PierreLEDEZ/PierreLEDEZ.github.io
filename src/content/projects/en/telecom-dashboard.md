@@ -4,8 +4,8 @@ ctx: "Siradel · 2022"
 tags: ["Python", "Flask", "Angular", "PostgreSQL", "PostGIS"]
 github: ""
 link: ""
-image: "/images/projects/dashboard-telecom.png"
-order: 3
+image: ""
+order: 9
 lang: "en"
 alternateSlug: "dashboard-telecom"
 ---

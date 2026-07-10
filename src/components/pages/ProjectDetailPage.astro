@@ -46,7 +46,11 @@ const alternateUrl = d.alternateSlug
 
       {d.image ? (
         <div class="rv w-full aspect-video rounded-xl mb-7 overflow-hidden">
-          <img class="w-full h-full object-cover" src={d.image} alt={d.title} />
+          {d.image.endsWith('.webm') ? (
+            <video class="w-full h-full object-contain" src={d.image} autoplay loop muted playsinline aria-label={d.title} />
+          ) : (
+            <img class="w-full h-full object-contain" src={d.image} alt={d.title} />
+          )}
         </div>
       ) : (
         <div class="rv img-empty-gradient w-full aspect-video rounded-xl mb-7 overflow-hidden relative"></div>
